@@ -1,0 +1,5 @@
+/make-a-donation/*     /donate/            301
+/zelle-instructions/*  /donate/            301
+/donation-successful/* /donate/thank-you/  301
+/contact/*             /apply/             301
+/home-3/*              /                   301

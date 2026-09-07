@@ -1,0 +1,35 @@
+# Sepharadic Baltimore Fund
+
+> A community fund in Baltimore, Maryland providing emergency loans and support
+> to families. Independent of any shul or political group. Registered 501(c)(3).
+
+## What it is
+
+The Sepharadic Baltimore Fund (SBF) gives emergency financial help to families in the Baltimore
+Sephardic community. Decisions are made on the need of the person asking and
+nothing else — there is no membership, no affiliation requirement, and no
+political consideration.
+
+## What it helps with
+
+Rent and mortgage, a bar or bat mitzvah, a wedding, finding a job, credit card
+debt, and anything else. There is no threshold to clear.
+
+## How to get help
+
+Apply at https://sbfloan.com/apply/ — one form, reviewed by people from the community, treated
+with discretion. SBF never asks for a Social Security number, bank logins, or
+account numbers.
+
+## How to give
+
+Donate at https://sbfloan.com/donate/ — any amount, one time or recurring weekly or monthly.
+Card payments are processed by Stripe; Zelle is also accepted. Contributions are
+tax-deductible to the extent allowed by law.
+
+## Pages
+
+- https://sbfloan.com/ — home
+- https://sbfloan.com/about/ — about the fund, how it works, common questions
+- https://sbfloan.com/donate/ — donate
+- https://sbfloan.com/apply/ — apply for help

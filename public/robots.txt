@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Answer engines are welcome — being findable is the point.
+Sitemap: https://sbfloan.com/sitemap.xml

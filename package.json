@@ -1,0 +1,14 @@
+{
+  "name": "sbf-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Sepharadic Baltimore Fund — sbfloan.com",
+  "scripts": {
+    "test": "node --test",
+    "dev": "wrangler pages dev public --compatibility-date=2026-09-06"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}
