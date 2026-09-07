@@ -14,6 +14,7 @@ ORG = "Sepharadic Baltimore Fund"
 ALT = "Sephardic Baltimore Funds"           # the old site's spelling — kept for search
 VIDEO_ID = "yh6BLorQu9Q"
 ZELLE_USER, ZELLE_HOST = "sepharadicbaltimorefund", "gmail.com"
+TURNSTILE_SITEKEY = "0x4AAAAAAEq1FeGqB-zWpYFX"
 # One-time gives in multiples of chai; recurring is a smaller weekly/monthly ladder.
 PRESETS_ONCE = [18, 36, 72, 180, 360]
 PRESETS_RECUR = [1, 5, 10, 18, 26, 36, 52]
@@ -184,6 +185,7 @@ def footer():
   </div>
 </footer>
 </div>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script src="{ASSETS['js']}" defer></script>
 </body>
 </html>
@@ -432,6 +434,7 @@ def build_donate():
 
       <p class="small" style="margin-top:14px" id="amt-hint">One-time gifts in multiples of chai. Give any other amount in the last box.</p>
 
+      <div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-theme="dark" data-appearance="interaction-only" style="margin-top:18px"></div>
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:14px;margin-top:24px">
         <button class="btn btn--solid" type="submit" id="donate-go">Continue to secure checkout</button>
         <span class="small" style="text-align:center">Processed securely by Stripe. Your card details never touch our servers.</span>
@@ -549,6 +552,7 @@ def build_apply():
           <span class="muted">The information above is accurate to the best of my knowledge, and SBF may contact me about this request. <span class="req">*</span></span>
         </label>
 
+        <div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-theme="dark" data-appearance="interaction-only" style="margin-top:18px"></div>
         <div style="display:flex;flex-direction:column;gap:14px;margin-top:24px">
           <button class="btn btn--solid" type="submit" id="apply-go">Submit application</button>
           <span class="small">Sent to the fund as a PDF. Nothing is stored on this website.</span>

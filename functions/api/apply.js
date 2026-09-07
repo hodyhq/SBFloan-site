@@ -81,8 +81,15 @@ function validate(raw) {
   return { data: out, errors };
 }
 
-async function verifyTurnstile(token, ip, secret) {
-  if (!secret) return true;            // not configured yet — only unset in preview
+async function verifyTurnstile(token, ip, env) {
+  const secret = env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    // Fail CLOSED. An unconfigured secret used to mean "skip the check", which
+    // turned a missing env var into a silently open endpoint.
+    if (env.ALLOW_UNVERIFIED_SUBMISSIONS === '1') return true;   // local dev only
+    console.error('turnstile: TURNSTILE_SECRET_KEY not configured — refusing');
+    return false;
+  }
   if (!token) return false;
   const body = new FormData();
   body.append('secret', secret);
@@ -176,7 +183,7 @@ export async function onRequestPost({ request, env }) {
   if (clean(raw.website)) return json(200, { ok: true });
 
   const ip = request.headers.get('cf-connecting-ip') || '';
-  if (!(await verifyTurnstile(raw.turnstileToken, ip, env.TURNSTILE_SECRET_KEY))) {
+  if (!(await verifyTurnstile(raw.turnstileToken, ip, env))) {
     return json(400, { error: 'verification_failed' });
   }
 

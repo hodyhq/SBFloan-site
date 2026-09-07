@@ -33,8 +33,8 @@ can see how it works and help improve it.
 ### How it's built
 
 Static HTML served by **Cloudflare Pages**, with two small serverless functions
-doing the only dynamic work on the site. No framework, no tracker, no analytics,
-and one 8 KB JavaScript file.
+doing the only dynamic work on the site. No framework, no tracker, no analytics —
+one small JavaScript file of our own, plus Cloudflare Turnstile on the two forms.
 
 ```
 build.py              regenerates public/ — five pages share one set of templates
@@ -48,10 +48,21 @@ functions/api/
 
 ### Two things worth knowing
 
-**No applicant data is stored, anywhere.** When someone submits an application the
+**The website stores no applicant data.** When someone submits an application the
 PDF is composed in memory, attached to a single email, and discarded. There is no
-database, no log of submissions, and nothing to leak. The website could be taken
-offline tomorrow and no one's private circumstances would go with it.
+database, no log of submissions, and nothing retained at the edge — take the site
+offline and nothing private goes with it.
+
+What that does *not* mean is that the application disappears. Once sent it lives in
+two places outside this repository, and both are worth being honest about:
+
+| Where | Retention |
+|---|---|
+| **Resend** (the sending service) | Keeps delivery logs and message content per its own retention policy |
+| **The destination mailbox** | Keeps the email and its PDF attachment until someone deletes it |
+
+Anyone reviewing applications should treat that mailbox as the system of record —
+and as the thing to secure.
 
 **Donors choose the amount and the cadence.** One-time, weekly, or monthly, at any
 figure. Stripe supports customer-chosen amounts on one-time prices but *not* on
@@ -109,8 +120,9 @@ is served straight from the repo.
 - **Keep it accessible.** Real labels on every field, visible focus rings, and 4.5:1
   contrast minimum. Someone applying here may be doing it stressed, on an old phone,
   at midnight.
-- **No analytics or third-party scripts.** People applying for financial help should
-  not be tracked for doing so.
+- **No analytics, and no third-party script except Turnstile.** People applying for
+  financial help should not be tracked for doing so. Turnstile earns its place by
+  keeping the application form from becoming a spam pipe into a real person's inbox.
 
 ### Local secrets
 

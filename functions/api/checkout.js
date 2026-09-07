@@ -49,8 +49,15 @@ export function parseAmountToCents(input) {
   return cents;
 }
 
-async function verifyTurnstile(token, ip, secret) {
-  if (!secret) return true;
+async function verifyTurnstile(token, ip, env) {
+  const secret = env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    // Fail CLOSED. An unconfigured secret used to mean "skip the check", which
+    // turned a missing env var into a silently open endpoint.
+    if (env.ALLOW_UNVERIFIED_SUBMISSIONS === '1') return true;   // local dev only
+    console.error('turnstile: TURNSTILE_SECRET_KEY not configured — refusing');
+    return false;
+  }
   if (!token) return false;
   const body = new FormData();
   body.append('secret', secret);
@@ -91,7 +98,7 @@ export async function onRequestPost({ request, env }) {
   const { mode, interval, label } = freq;
 
   const ip = request.headers.get('cf-connecting-ip') || '';
-  if (!(await verifyTurnstile(raw.turnstileToken, ip, env.TURNSTILE_SECRET_KEY))) {
+  if (!(await verifyTurnstile(raw.turnstileToken, ip, env))) {
     return json(400, { error: 'verification_failed' });
   }
 
@@ -125,8 +132,10 @@ export async function onRequestPost({ request, env }) {
     headers: {
       authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
       'content-type': 'application/x-www-form-urlencoded',
-      // Same amount + frequency double-clicked won't mint two sessions.
-      'idempotency-key': `${cents}-${mode}-${interval || 'x'}-${ip}-${Math.floor(Date.now() / 30000)}`,
+      // Opaque and unique per attempt. A deterministic key derived from amount
+      // + IP + time bucket collides for two donors behind the same NAT, and
+      // Stripe would hand the second one the first one's session.
+      'idempotency-key': crypto.randomUUID(),
     },
     body: form,
   });
