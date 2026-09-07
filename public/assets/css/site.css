@@ -265,3 +265,15 @@ h3 { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-
 .ftr-btm { display: flex; flex-direction: column; gap: 8px; padding-top: 24px; border-top: 1px solid var(--line); }
 @media (min-width: 900px) { .ftr-btm { flex-direction: row; align-items: center; justify-content: space-between; gap: 32px; } }
 .ftr-btm span { max-width: 100%; font-size: .78rem; line-height: 1.5; color: var(--txt-3); }
+
+/* ---- footer credits ---- */
+.credits { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px;
+  margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.credit { display: inline-flex; align-items: center; gap: 8px;
+  font-size: .8rem; color: var(--txt-3); }
+.credit img { width: 20px; height: auto; opacity: .85; }
+.credit svg { color: #F6821F; flex-shrink: 0; }          /* Cloudflare orange */
+.credit strong { font-weight: 600; color: var(--txt-2); }
+a.credit:hover { color: var(--txt-2); }
+a.credit:hover img { opacity: 1; }
+a.credit:hover strong { color: var(--acc); }
