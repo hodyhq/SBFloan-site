@@ -434,7 +434,7 @@ def build_donate():
 
       <p class="small" style="margin-top:14px" id="amt-hint">One-time gifts in multiples of chai. Give any other amount in the last box.</p>
 
-      <div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-theme="dark" data-appearance="interaction-only" style="margin-top:18px"></div>
+      <div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-theme="dark" style="margin-top:18px"></div>
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:14px;margin-top:24px">
         <button class="btn btn--solid" type="submit" id="donate-go">Continue to secure checkout</button>
         <span class="small" style="text-align:center">Processed securely by Stripe. Your card details never touch our servers.</span>
@@ -552,10 +552,9 @@ def build_apply():
           <span class="muted">The information above is accurate to the best of my knowledge, and SBF may contact me about this request. <span class="req">*</span></span>
         </label>
 
-        <div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-theme="dark" data-appearance="interaction-only" style="margin-top:18px"></div>
+        <div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-theme="dark" style="margin-top:18px"></div>
         <div style="display:flex;flex-direction:column;gap:14px;margin-top:24px">
           <button class="btn btn--solid" type="submit" id="apply-go">Submit application</button>
-          <span class="small">Sent to the fund as a PDF. Nothing is stored on this website.</span>
         </div>
         <p class="status" id="apply-status" role="status" aria-live="polite" hidden></p>
       </form>
