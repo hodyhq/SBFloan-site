@@ -104,6 +104,20 @@ test('weekly cadence maps to a weekly Stripe interval', async () => {
   assert.equal(call.params.get('line_items[0][price_data][unit_amount]'), '500');
 });
 
+test('one-time donations create a Customer so they appear in the donor portal', async () => {
+  const [once] = await captureStripeCall(async () => {
+    await onRequestPost({ request: post({ amount: '36', frequency: 'once' }), env: DEV });
+  });
+  assert.equal(once.params.get('mode'), 'payment');
+  assert.equal(once.params.get('customer_creation'), 'always');
+
+  const [sub] = await captureStripeCall(async () => {
+    await onRequestPost({ request: post({ amount: '36', frequency: 'monthly' }), env: DEV });
+  });
+  // Subscriptions always create a customer; sending the param would be rejected.
+  assert.equal(sub.params.get('customer_creation'), null);
+});
+
 test('two donors on one IP do not share a Checkout Session', async () => {
   // The key used to be amount+mode+ip+30s-bucket. Two people behind the same
   // NAT giving the same amount in the same window collided, and Stripe handed

@@ -123,6 +123,13 @@ export async function onRequestPost({ request, env }) {
     'line_items[0][price_data][product_data][name]': label,
     'metadata[source]': 'sbfloan.com',
   });
+  if (mode === 'payment') {
+    // Checkout only creates a Customer for one-time payments when asked
+    // (customer_creation defaults to if_required). Without this, a one-time
+    // donor has no Stripe customer record, so they cannot sign in to the donor
+    // portal and their gift never appears there. Subscriptions always create one.
+    form.set('customer_creation', 'always');
+  }
   if (interval) {
     form.set('line_items[0][price_data][recurring][interval]', interval);
   }
