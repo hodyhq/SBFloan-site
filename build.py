@@ -230,12 +230,13 @@ def page(path, title, desc, body, extra_ld="", active=""):
 
 # ------------------------------------------------------------------ pages ----
 def build_home():
+    dirs = ["left", "up", "right"]
     cards = "".join(
-        f'<article class="card"><span style="color:var(--acc)">{icon(name)}</span>'
-        f'<h3>{t}</h3><p class="muted">{c}</p></article>' for t, c, name in CATS)
+        f'<article class="card" data-r="{dirs[i % 3]}"><span style="color:var(--acc)">{icon(name)}</span>'
+        f'<h3>{t}</h3><p class="muted">{c}</p></article>' for i, (t, c, name) in enumerate(CATS))
     body = f"""<div class="wrap">
   <section class="herosplit reveal">
-    <div class="herotext">
+    <div class="herotext" data-r="left">
       <p class="pillbadge">Interest-free loans &middot; Baltimore</p>
       <h1>Help for our<br>community.</h1>
       <p class="lede">Interest-free loans and support for families in Baltimore &mdash; decided on the need of the person asking, and nothing else.</p>
@@ -244,7 +245,7 @@ def build_home():
         <a class="btn btn--ghost" href="/donate/">Donate</a>
       </div>
     </div>
-    <div style="position:relative">
+    <div style="position:relative" data-r="right">
       {shot("hero", "A loan being handed across a kitchen table, with the written agreement beside it", 1400, 1050, eager=True)}
       <div class="badge">
         <div class="logomark"><img src="/assets/img/logo.png" width="80" height="80" alt=""></div>
@@ -254,7 +255,7 @@ def build_home():
   </section>
 
   <section class="section" id="help">
-    <div class="center" style="margin-bottom:28px">
+    <div class="center" data-r="up" style="margin-bottom:28px">
       <p class="eyebrow">What we help with</p>
       <h2>Some of the reasons<br>people come to us.</h2>
     </div>
@@ -262,8 +263,8 @@ def build_home():
   </section>
 
   <section class="section">
-    <div class="split">
-      <div class="stack">
+    <div class="split" data-r="up">
+      <div class="stack" data-r="left">
         <p class="eyebrow">Independent by design</p>
         <h2>We answer to no one<br>outside this community.</h2>
         <p class="muted">We are a nonprofit, independent of any shul or political group. That independence lets us decide every case on need alone &mdash; without the nonsense of politics.</p>
@@ -276,8 +277,8 @@ def build_home():
   </section>
 
   <section class="section" id="weekly">
-    <div class="split">
-      <div class="stack">
+    <div class="split" data-r="up">
+      <div class="stack" data-r="left">
         <p class="eyebrow">Ongoing campaign</p>
         <h2>$5 every Erev Shabbat.</h2>
         <p class="muted">A standing weekly gift given before Shabbat. On its own it is small. Together it is what keeps the fund ready.</p>
@@ -291,7 +292,7 @@ def build_home():
   </section>
 
   <section class="section">
-    <div class="split">
+    <div class="split" data-r="up">
       <div>
         <a class="video" href="https://www.youtube.com/watch?v={VIDEO_ID}" target="_blank" rel="noopener">
           <img src="https://i.ytimg.com/vi/{VIDEO_ID}/maxresdefault.jpg" width="1280" height="720" loading="lazy"
@@ -307,7 +308,7 @@ def build_home():
     </div>
   </section>
 
-  <section class="section center">
+  <section class="section center" data-r="up">
     <h2>Help us be ready for the<br>next family who asks.</h2>
     <p class="lede">Donations here fund the loans and support we give to families in this community.</p>
     <div class="btnrow">
@@ -337,8 +338,10 @@ def build_about():
         ("We talk it through", "Someone from the fund reaches out to understand the situation. A conversation, and you set the pace."),
         ("Funds go out", "If we can help, we agree on repayment together before anything moves."),
     ]
+    dirs = ["left", "up", "right"]
     stepcards = "".join(
-        f'<article class="card"><span class="pip">{i+1}</span><h3>{t}</h3><p class="muted">{c}</p></article>'
+        f'<article class="card" data-r="{dirs[i % 3]}"><span class="pip">{i+1}</span>'
+        f'<h3>{t}</h3><p class="muted">{c}</p></article>'
         for i, (t, c) in enumerate(steps))
     facts = ["Registered 501(c)(3) nonprofit", "A receipt is emailed for every card donation",
              "Contributions are tax-deductible to the extent allowed by law",
@@ -379,8 +382,8 @@ def build_about():
   </section>
 
   <section class="section">
-    <div class="split">
-      <div>
+    <div class="split" data-r="up">
+      <div data-r="left">
         {shot("about", "Members of the fund reviewing applications together around a table", 1400, 933)}
       </div>
       <div class="stack">
@@ -395,7 +398,7 @@ def build_about():
   </section>
 
   <section class="section" id="how">
-    <div class="center" style="margin-bottom:28px">
+    <div class="center" data-r="up" style="margin-bottom:28px">
       <p class="eyebrow">How it works</p>
       <h2>Three steps, and none<br>of them are difficult.</h2>
     </div>
@@ -403,8 +406,8 @@ def build_about():
   </section>
 
   <section class="section" id="video">
-    <div class="split">
-      <div class="stack">
+    <div class="split" data-r="up">
+      <div class="stack" data-r="left">
         <p class="eyebrow">In their own words</p>
         <h2>Hear it from the people<br>who built the fund.</h2>
         <p class="muted">A short introduction to what SBF does and why it exists.</p>
@@ -419,8 +422,8 @@ def build_about():
   </section>
 
   <section class="section">
-    <div class="split">
-      <div class="stack">
+    <div class="split" data-r="up">
+      <div class="stack" data-r="left">
         <p class="eyebrow">Giving with confidence</p>
         <h2>Your donation is<br>tax-deductible.</h2>
         <p class="muted">Card donations are processed by Stripe and generate an emailed receipt, so you have a record for tax time without asking us for one.</p>
@@ -430,7 +433,7 @@ def build_about():
   </section>
 
   <section class="section">
-    <div class="center" style="margin-bottom:24px">
+    <div class="center" data-r="up" style="margin-bottom:24px">
       <p class="pillbadge">Who runs the fund</p>
       <h2>The people reviewing your<br>application live here too.</h2>
     </div>
@@ -442,14 +445,14 @@ def build_about():
   </section>
 
   <section class="section">
-    <div class="center" style="margin-bottom:24px">
+    <div class="center" data-r="up" style="margin-bottom:24px">
       <p class="eyebrow">Common questions</p>
       <h2>Before you apply.</h2>
     </div>
-    <div class="grid">{faq_html}</div>
+    <div class="grid" data-r="up">{faq_html}</div>
   </section>
 
-  <section class="section center">
+  <section class="section center" data-r="up">
     <h2>Whether you need help or want<br>to give it, it starts the same way.</h2>
     <div class="btnrow">
       <a class="btn btn--solid" href="/apply/">Apply for help</a>
@@ -483,7 +486,7 @@ def build_donate():
   </section>
 
   <section class="section">
-    <form class="formcard" id="donate-form" style="max-width:720px;margin:0 auto" novalidate>
+    <form class="formcard" id="donate-form" data-r="up" style="max-width:720px;margin:0 auto" novalidate>
       <fieldset style="border:0;padding:0;margin:0 0 24px">
         <legend class="field" style="margin-bottom:12px">How often?</legend>
         <div class="amounts" style="grid-template-columns:repeat(3,minmax(0,1fr))" role="radiogroup" aria-label="Frequency" id="freq">
@@ -510,8 +513,8 @@ def build_donate():
   </section>
 
   <section class="section">
-    <div class="split">
-      <div class="stack">
+    <div class="split" data-r="up">
+      <div class="stack" data-r="left">
         <p class="pillbadge">Repaid, then lent again</p>
         <h2>Every dollar goes<br>back out.</h2>
         <p class="muted">Loans are repaid into the same fund and lent to the next family. A donation here does not get spent once &mdash; it keeps working.</p>
@@ -523,7 +526,7 @@ def build_donate():
   </section>
 
   <section class="section">
-    <div class="grid">
+    <div class="grid" data-r="up">
       <article class="card" id="weekly">
         <p class="eyebrow">Ongoing campaign</p>
         <h2 style="font-size:1.7rem">$5 every Erev Shabbat</h2>
@@ -541,8 +544,8 @@ def build_donate():
   </section>
 
   <section class="section">
-    <div class="split">
-      <div class="stack">
+    <div class="split" data-r="up">
+      <div class="stack" data-r="left">
         <p class="eyebrow">Already giving?</p>
         <h2>Manage it yourself,<br>any time.</h2>
         <p class="muted">Update your card, change your amount, or stop a recurring gift from the donor portal.</p>
@@ -608,7 +611,7 @@ def build_apply():
 
   <section class="section">
     <div class="applygrid">
-      <form class="formcard" id="apply-form" novalidate>
+      <form class="formcard" id="apply-form" data-r="left" novalidate>
         <fieldset style="border:0;padding:0;margin:0">
           <legend class="legend"><span class="pip">1</span><h3>Applicant information</h3></legend>
           <div class="fields">
@@ -676,7 +679,7 @@ def build_apply():
         <p class="status" id="apply-status" role="status" aria-live="polite" hidden></p>
       </form>
 
-      <aside style="display:flex;flex-direction:column;gap:16px">
+      <aside style="display:flex;flex-direction:column;gap:16px" data-r="right">
         <div class="card"><h3>What happens next</h3><ul>{nextlist}</ul></div>
         <div class="card"><h3>What we never ask for</h3><ul>{neverlist}</ul>
           <p class="small" style="padding-top:12px;border-top:1px solid var(--line)">We will never ask for these &mdash; not by email, text, or phone.</p></div>
