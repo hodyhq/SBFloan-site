@@ -114,8 +114,10 @@ input, select, textarea, button { font: inherit; color: inherit; }
 .brand img { width: 32px; height: 32px; }
 .brand span { font-family: var(--display); font-size: 14.5px; font-weight: 600; line-height: 1.15; }
 .nav { display: none; align-items: center; gap: 34px; }
-.nav a { font-size: 15px; color: var(--txt-2); }
-.nav a:hover, .nav a[aria-current="page"] { color: var(--txt); }
+/* :not(.btn) matters — `.nav a` outranks `.btn--solid` on specificity and was
+   overriding the button's dark-on-accent text with muted grey. */
+.nav a:not(.btn) { font-size: 15px; color: var(--txt-2); }
+.nav a:not(.btn):hover, .nav a:not(.btn)[aria-current="page"] { color: var(--txt); }
 .burger { display: flex; flex-direction: column; gap: 5px; padding: 11px; background: none; border: 0; cursor: pointer; }
 .burger span { width: 20px; height: 1.5px; background: var(--txt-2); display: block; }
 @media (min-width: 900px) {
