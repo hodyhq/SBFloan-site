@@ -3,20 +3,20 @@
    Mobile-first: base rules are the 390px layout, media queries scale up. */
 
 :root {
-  --bg:        #EDF2F9;      /* soft ground, not stark white */
+  --bg:        #DDE7F4;      /* deeper ground; text tokens darkened to match */
   --bg-2:      #FFFFFF;      /* cards and panels float on it */
   --navy:      #0E2A52;      /* hero band + footer */
   --navy-2:    #0A2044;
   --txt:       #0B1B33;
-  --txt-2:     #4A5D77;
-  --txt-3:     #64748B;
+  --txt-2:     #3E4F66;
+  --txt-3:     #51627A;
   --acc:       #1B6BE8;
-  --acc-deep:  #1358C7;
+  --acc-deep:  #10499F;
   --on-acc:    #FFFFFF;
-  --line:      #DCE7F5;
-  --line-2:    #C7DAF0;
-  --fill:      #F2F7FD;
-  --fill-acc:  #E7F0FB;
+  --line:      #C8D8EC;
+  --line-2:    #B4CBE6;
+  --fill:      #EFF4FB;
+  --fill-acc:  #DCE8F8;
 
   --display: Rubik, "Helvetica Neue", Arial, sans-serif;
   --body:    Assistant, "Helvetica Neue", Arial, sans-serif;
@@ -168,8 +168,18 @@ h3 { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-
 @media (min-width: 700px)  { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
 @media (min-width: 1000px) { .grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .split { display: grid; gap: 26px; grid-template-columns: 1fr; align-items: center;
-  padding: 28px 22px; border: 1px solid var(--line); border-radius: 28px;
-  background: #FFFFFF; box-shadow: 0 4px 18px rgba(11,27,51,0.05); }
+  padding: 30px 24px; border: 0; border-radius: 28px;
+  background: var(--navy); color: #C6D9F2;
+  box-shadow: 0 18px 44px rgba(11,27,51,0.16); }
+.split h2, .split h3 { color: #FFFFFF; }
+.split .muted, .split .lede, .split p { color: #B9CFEA; }
+.split .pillbadge { background: rgba(255,255,255,0.14); color: #DCEAFB; }
+.split .btn--ghost { background: transparent; color: #FFFFFF; border-color: rgba(255,255,255,0.34); }
+.split .btn--ghost:hover { border-color: #FFFFFF; color: #FFFFFF; }
+.split li { border-bottom-color: rgba(255,255,255,0.14) !important; }
+.split .pip { background: rgba(255,255,255,0.16); color: #DCEAFB; }
+.split svg { color: #6FB4EA; }
+.split .shot, .split .video { border-color: rgba(255,255,255,0.18); }
 @media (min-width: 900px) { .split { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; padding: 56px 60px; } }
 .stack { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
 .center { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; text-align: left; }
@@ -333,3 +343,31 @@ a.credit:hover strong { color: var(--acc); }
 }
 .ftr .brand img { width: 52px; height: 52px; }
 .ftr .brand span { color: #FFFFFF; }
+
+/* ---- band -> ground transition ----
+   A curve here reads as a 2017 wave-divider and dates the page. A hard line
+   reads as two documents stacked. What works is a fade long enough that there
+   is no edge to notice: navy holds for most of the band, then dissolves into
+   the ground over ~220px. */
+.heroband {
+  background: linear-gradient(180deg,
+    var(--navy) 0%,
+    var(--navy) 62%,
+    rgba(14, 42, 82, 0.86) 78%,
+    rgba(14, 42, 82, 0.42) 90%,
+    rgba(14, 42, 82, 0) 100%);
+}
+.heroband .wrap { padding-bottom: 56px; }
+@media (min-width: 900px) { .heroband .wrap { padding-bottom: 120px; } }
+
+/* ---- text that has to work on the navy panels ---- */
+.bignum { font-family: var(--display); font-size: clamp(3.2rem, 9vw, 4.75rem); font-weight: 700;
+  line-height: 1; letter-spacing: -.04em; color: #FFFFFF; }
+.split .bignum { text-shadow: 0 0 46px rgba(111, 180, 234, 0.35); }
+.split .small { color: #9DB8D8; }
+.split .field, .split strong { color: #FFFFFF; }
+.split .note { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: #E4EEFA; }
+.split .btn--solid { background: #FFFFFF; color: var(--navy); box-shadow: 0 8px 22px rgba(3,14,32,0.30); }
+.split .btn--solid:hover { background: #DCE8F8; color: var(--navy); }
+.split a:not(.btn) { color: #8FC4F5; }
+.split a:not(.btn):hover { color: #FFFFFF; }

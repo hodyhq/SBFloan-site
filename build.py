@@ -283,7 +283,7 @@ def build_home():
         <p class="muted">A standing weekly gift given before Shabbat. On its own it is small. Together it is what keeps the fund ready.</p>
       </div>
       <div class="stack" style="align-items:flex-start">
-        <span style="font-family:var(--display);font-size:clamp(3.2rem,9vw,4.75rem);font-weight:600;line-height:1;letter-spacing:-.04em;color:var(--acc);text-shadow:0 0 46px rgba(77,166,240,.45)">$5</span>
+        <span class="bignum">$5</span>
         <span class="small">every week &middot; cancel any time</span>
         <a class="btn btn--solid" href="/donate/?amount=5&amp;frequency=weekly">Join the campaign</a>
       </div>
