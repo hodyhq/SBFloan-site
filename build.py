@@ -232,7 +232,7 @@ def page(path, title, desc, body, extra_ld="", active=""):
 def build_home():
     dirs = ["left", "up", "right"]
     cards = "".join(
-        f'<article class="card" data-r="{dirs[i % 3]}"><span style="color:var(--warm)">{icon(name)}</span>'
+        f'<article class="card" data-r="{dirs[i % 3]}"><span style="color:var(--acc)">{icon(name)}</span>'
         f'<h3>{t}</h3><p class="muted">{c}</p></article>' for i, (t, c, name) in enumerate(CATS))
     body = f"""<div class="wrap">
   <section class="herosplit reveal">
