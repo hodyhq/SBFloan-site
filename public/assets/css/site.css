@@ -48,7 +48,7 @@ body {
 
 h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin: 0; }
 ul { padding: 0; list-style: none; }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 a { color: var(--acc); text-decoration: none; }
 a:hover { color: #8FC8F7; }
 input, select, textarea, button { font: inherit; color: inherit; }
@@ -186,7 +186,7 @@ h3 { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-
 /* video */
 .video { position: relative; display: block; border: 1px solid var(--line-2);
   border-radius: var(--rad-lg); overflow: hidden; box-shadow: 0 0 70px rgba(77,166,240,0.13); }
-.video img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; opacity: .88; }
+.video img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; opacity: .88; }
 .video::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(7,11,20,.12), rgba(7,11,20,.55)); }
 .video .play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2;
