@@ -139,6 +139,18 @@
   /* ---- apply ---- */
   const aform = document.getElementById('apply-form');
   if (aform) {
+    // "If yes, please explain" only exists once they've said yes.
+    const overdue = aform.overdue;
+    const detail = document.getElementById('overdue-detail');
+    if (overdue && detail) {
+      const sync = () => {
+        const yes = overdue.value === 'Yes';
+        detail.hidden = !yes;
+        aform.overdueDetail.required = yes;
+      };
+      overdue.addEventListener('change', sync);
+      sync();
+    }
     const status = document.getElementById('apply-status');
     const go = document.getElementById('apply-go');
     aform.addEventListener('submit', async (e) => {
@@ -149,7 +161,7 @@
       }
       const fd = new FormData(aform);
       const payload = Object.fromEntries(fd.entries());
-      payload.consent = aform.consent.checked;
+      payload.declaration = aform.declaration.checked;
       payload.turnstileToken = turnstileToken(aform);
       go.disabled = true;
       show(status, 'ok', 'Sending your application…');

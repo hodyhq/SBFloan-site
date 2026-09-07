@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Apply for Help — Sepharadic Baltimore Fund</title>
-<meta name="description" content="One confidential form. No membership required, no affiliation needed. Tell us what you need and we will get back to you.">
+<title>Apply for an Interest-Free Loan — Sepharadic Baltimore Fund</title>
+<meta name="description" content="One confidential form. No membership required, no affiliation needed. Interest-free loans for families in Baltimore.">
 <link rel="canonical" href="https://sbfloan.com/apply/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sepharadic Baltimore Fund">
-<meta property="og:title" content="Apply for Help — Sepharadic Baltimore Fund">
-<meta property="og:description" content="One confidential form. No membership required, no affiliation needed. Tell us what you need and we will get back to you.">
+<meta property="og:title" content="Apply for an Interest-Free Loan — Sepharadic Baltimore Fund">
+<meta property="og:description" content="One confidential form. No membership required, no affiliation needed. Interest-free loans for families in Baltimore.">
 <meta property="og:url" content="https://sbfloan.com/apply/">
 <meta property="og:image" content="https://sbfloan.com/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -30,7 +30,7 @@
       "alternateName": ["SBF", "Sephardic Baltimore Funds"],
       "url": "https://sbfloan.com/",
       "logo": "https://sbfloan.com/assets/img/logo.png",
-      "description": "A Baltimore community fund providing emergency loans and support to families, independent of any shul or political group.",
+      "description": "A Baltimore community fund providing interest-free loans and support to families, independent of any shul or political group.",
       "areaServed": { "@type": "City", "name": "Baltimore", "containedInPlace": { "@type": "State", "name": "Maryland" } },
       "nonprofitStatus": "Nonprofit501c3",
       "contactPoint": {
@@ -72,7 +72,7 @@
 <main id="main">
 <div class="wrap">
   <section class="hero reveal">
-    <p class="eyebrow">Apply for help</p>
+    <p class="eyebrow">Interest-free loan program</p>
     <h1>Tell us what<br>you need.</h1>
     <p class="lede">One form, reviewed by people from this community. You do not need to be a member anywhere, know anyone, or be owed a favor.</p>
   </section>
@@ -81,50 +81,64 @@
     <div class="applygrid">
       <form class="formcard" id="apply-form" novalidate>
         <fieldset style="border:0;padding:0;margin:0">
-          <legend class="legend"><span class="pip">1</span><h3>About you</h3></legend>
+          <legend class="legend"><span class="pip">1</span><h3>Applicant information</h3></legend>
           <div class="fields">
-            <div class="span2"><label class="field" for="name">Full name <span class="req">*</span></label>
-              <input class="input" id="name" name="name" required maxlength="120" autocomplete="name" placeholder="First and last name"></div>
-            <div><label class="field" for="email">Email address <span class="req">*</span></label>
-              <input class="input" id="email" name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></div>
-            <div><label class="field" for="phone">Phone number <span class="req">*</span></label>
-              <input class="input" id="phone" name="phone" type="tel" required maxlength="40" autocomplete="tel" placeholder="(410) 000-0000"></div>
-            <div class="span2"><label class="field" for="bestTime">Best time to reach you</label>
-              <select class="select" id="bestTime" name="bestTime"><option value="">Choose one</option><option>Morning</option><option>Afternoon</option><option>Evening</option><option>Any time</option></select></div>
+            <div class="span2"><label class="field" for="name">Full name <span class="req">*</span></label><input class="input" id="name" name="name" type="text" required autocomplete="name" maxlength="120" placeholder="First and last name"></div>
+            <div><label class="field" for="dob">Date of birth <span class="req">*</span></label><input class="input" id="dob" name="dob" type="date" required autocomplete="bday"></div>
+            <div><label class="field" for="phone">Phone number <span class="req">*</span></label><input class="input" id="phone" name="phone" type="tel" required autocomplete="tel" maxlength="40" placeholder="(410) 000-0000"></div>
+            <div class="span2"><label class="field" for="email">Email address <span class="req">*</span></label><input class="input" id="email" name="email" type="email" required autocomplete="email" maxlength="254" placeholder="you@example.com"></div>
+            <div class="span2"><label class="field" for="address">Home address <span class="req">*</span></label><textarea class="textarea" id="address" name="address" required maxlength="300" placeholder="Street, city, state and ZIP"></textarea></div>
+            <div><label class="field" for="marital">Marital status <span class="req">*</span></label><select class="select" id="marital" name="marital" required><option value="">Choose one</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></div>
+            <div><label class="field" for="dependents">Number of dependents <span class="req">*</span></label><input class="input" id="dependents" name="dependents" type="number" required min="0" max="20" inputmode="numeric" placeholder="0"></div>
           </div>
         </fieldset>
 
         <fieldset style="border:0;padding:0;margin:0">
-          <legend class="legend"><span class="pip">2</span><h3>What you need</h3></legend>
+          <legend class="legend"><span class="pip">2</span><h3>Loan request</h3></legend>
           <div class="fields">
-            <div><label class="field" for="helpType">Type of help <span class="req">*</span></label>
-              <select class="select" id="helpType" name="helpType" required><option value="">Choose one</option><option>Rent or mortgage</option><option>Bar or Bat Mitzvah</option><option>A wedding</option><option>Finding a job</option><option>Credit card debt</option><option>Something else</option></select></div>
-            <div><label class="field" for="amount">Amount requested <span class="req">*</span></label>
-              <input class="input" id="amount" name="amount" required maxlength="20" inputmode="decimal" placeholder="$ 0.00"></div>
-            <div><label class="field" for="timeline">When is this needed by? <span class="req">*</span></label>
-              <select class="select" id="timeline" name="timeline" required><option value="">Choose one</option><option>Immediately</option><option>Within two weeks</option><option>Within a month</option><option>Flexible</option></select></div>
-            <div><label class="field" for="before">Received help from SBF before? <span class="req">*</span></label>
-              <select class="select" id="before" name="before" required><option value="">Choose one</option><option>Yes</option><option>No</option></select></div>
+            <div><label class="field" for="amount">Loan amount requested <span class="req">*</span></label><input class="input" id="amount" name="amount" type="text" required inputmode="decimal" maxlength="20" placeholder="$ 0.00"></div>
+            <div><label class="field" for="neededBy">Date funds are needed by <span class="req">*</span></label><input class="input" id="neededBy" name="neededBy" type="date" required ></div>
+            <div class="span2"><label class="field" for="purpose">Purpose of the loan <span class="req">*</span></label><textarea class="textarea" id="purpose" name="purpose" required maxlength="1500" placeholder="What the money is for, and anything about the situation you want us to know. There is no wrong way to write this."></textarea></div>
           </div>
         </fieldset>
 
         <fieldset style="border:0;padding:0;margin:0">
-          <legend class="legend"><span class="pip">3</span><h3>Your situation</h3></legend>
+          <legend class="legend"><span class="pip">3</span><h3>Repayment</h3></legend>
           <div class="fields">
-            <div class="span2"><label class="field" for="situation">Tell us what is going on <span class="req">*</span></label>
-              <textarea class="textarea" id="situation" name="situation" required maxlength="2000"
-                placeholder="As much or as little as you want to share. There is no wrong way to write this."></textarea></div>
-            <div class="span2"><label class="field" for="heard">How did you hear about SBF?</label>
-              <select class="select" id="heard" name="heard"><option value="">Choose one</option><option>A friend or family member</option><option>Someone at shul</option><option>A search engine</option><option>Social media</option><option>Somewhere else</option></select></div>
+            <div><label class="field" for="monthlyRepay">How much can you afford to repay monthly? <span class="req">*</span></label><input class="input" id="monthlyRepay" name="monthlyRepay" type="text" required inputmode="decimal" maxlength="20" placeholder="$ 0.00"></div>
+            <div><label class="field" for="guarantors">Can you provide guarantors? <span class="req">*</span></label><select class="select" id="guarantors" name="guarantors" required><option value="">Choose one</option><option>Yes, I can provide two guarantors</option><option>Yes, I can provide one guarantor</option><option>No, I cannot provide any guarantors</option></select></div>
+          </div>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0">
+          <legend class="legend"><span class="pip">4</span><h3>General eligibility</h3></legend>
+          <div class="fields">
+            <div><label class="field" for="overdue">Do you have overdue bills or missed payments? <span class="req">*</span></label><select class="select" id="overdue" name="overdue" required><option value="">Choose one</option><option>Yes</option><option>No</option></select></div>
+            <div><label class="field" for="bankruptcy">Have you ever filed for bankruptcy? <span class="req">*</span></label><select class="select" id="bankruptcy" name="bankruptcy" required><option value="">Choose one</option><option>Yes</option><option>No</option></select></div>
+            <div class="span2" id="overdue-detail" hidden><label class="field" for="overdueDetail">If yes, please explain</label><textarea class="textarea" id="overdueDetail" name="overdueDetail" maxlength="1000" placeholder="A sentence or two is fine."></textarea></div>
+          </div>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0">
+          <legend class="legend"><span class="pip">5</span><h3>Final questions</h3></legend>
+          <div class="fields">
+            <div class="span2"><label class="field" for="openToContact">Are you open to us contacting you to discuss your application? <span class="req">*</span></label><select class="select" id="openToContact" name="openToContact" required><option value="">Choose one</option><option>Yes</option><option>No</option></select></div>
           </div>
         </fieldset>
 
         <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
 
-        <label class="check" for="consent">
-          <input id="consent" name="consent" type="checkbox" required>
-          <span class="muted">The information above is accurate to the best of my knowledge, and SBF may contact me about this request. <span class="req">*</span></span>
+        <label class="check" for="declaration">
+          <input id="declaration" name="declaration" type="checkbox" required>
+          <span class="muted">I declare that the information provided is true and complete. <span class="req">*</span></span>
         </label>
+
+        <div style="margin-top:18px">
+          <label class="field" for="signature">Signature <span class="req">*</span></label>
+          <input class="input" id="signature" name="signature" required maxlength="120"
+                 autocomplete="off" placeholder="Type your full name">
+          <p class="small" style="margin-top:8px">Typing your name here counts as your signature. Today's date is recorded automatically.</p>
+        </div>
 
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAEq1FeGqB-zWpYFX" data-theme="dark" style="margin-top:18px"></div>
         <div style="display:flex;flex-direction:column;gap:14px;margin-top:24px">
@@ -134,7 +148,7 @@
       </form>
 
       <aside style="display:flex;flex-direction:column;gap:16px">
-        <div class="card"><h3>What happens next</h3><ul><li style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)"><span class="pip pip--sm">1</span><span><strong style="display:block">We read it</strong><span class="muted" style="font-size:.9rem">It goes to the people who review it, and is treated with discretion.</span></span></li><li style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)"><span class="pip pip--sm">2</span><span><strong style="display:block">We reach out</strong><span class="muted" style="font-size:.9rem">Someone from the fund contacts you to understand what would genuinely help.</span></span></li><li style="display:flex;gap:14px;padding:13px 0;"><span class="pip pip--sm">3</span><span><strong style="display:block">We work out terms</strong><span class="muted" style="font-size:.9rem">If we can help, we agree on repayment together. We will say so straight away if we cannot.</span></span></li></ul></div>
+        <div class="card"><h3>What happens next</h3><ul><li style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)"><span class="pip pip--sm">1</span><span><strong style="display:block">We read it</strong><span class="muted" style="font-size:.9rem">It goes to the people who review it, and is treated with discretion.</span></span></li><li style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)"><span class="pip pip--sm">2</span><span><strong style="display:block">We reach out</strong><span class="muted" style="font-size:.9rem">Someone from the fund contacts you to understand what would genuinely help.</span></span></li><li style="display:flex;gap:14px;padding:13px 0;"><span class="pip pip--sm">3</span><span><strong style="display:block">We agree terms</strong><span class="muted" style="font-size:.9rem">If we can help, we agree repayment together. We will say so straight away if we cannot.</span></span></li></ul></div>
         <div class="card"><h3>What we never ask for</h3><ul><li style="display:flex;gap:11px;padding:7px 0"><span style="color:var(--acc);flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span class="muted" style="font-size:.9rem">Your Social Security number</span></li><li style="display:flex;gap:11px;padding:7px 0"><span style="color:var(--acc);flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span class="muted" style="font-size:.9rem">Bank logins or account numbers</span></li><li style="display:flex;gap:11px;padding:7px 0"><span style="color:var(--acc);flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span class="muted" style="font-size:.9rem">Documents uploaded through this form</span></li></ul>
           <p class="small" style="padding-top:12px;border-top:1px solid var(--line)">We will never ask for these &mdash; not by email, text, or phone.</p></div>
         <div class="card"><h3>Not sure if you qualify?</h3>
@@ -175,6 +189,6 @@
 </footer>
 </div>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<script src="/assets/js/site.3b669d1f25.js" defer></script>
+<script src="/assets/js/site.ddf9bf7a9c.js" defer></script>
 </body>
 </html>

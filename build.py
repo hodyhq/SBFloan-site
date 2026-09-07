@@ -85,7 +85,7 @@ def head(title, desc, path, extra_ld=""):
       "alternateName": ["SBF", "{ALT}"],
       "url": "{SITE}/",
       "logo": "{SITE}/assets/img/logo.png",
-      "description": "A Baltimore community fund providing emergency loans and support to families, independent of any shul or political group.",
+      "description": "A Baltimore community fund providing interest-free loans and support to families, independent of any shul or political group.",
       "areaServed": {{ "@type": "City", "name": "Baltimore", "containedInPlace": {{ "@type": "State", "name": "Maryland" }} }},
       "nonprofitStatus": "Nonprofit501c3",
       "contactPoint": {{
@@ -290,7 +290,7 @@ def build_home():
       "publisher": {{ "@id": "{SITE}/#org" }}
     }}"""
     page("/", f"{ORG} — Emergency Help for Our Community",
-         "Emergency loans and support for families in Baltimore. Independent of any shul or political group. Decided on need alone.",
+         "Interest-free loans and support for families in Baltimore. Independent of any shul or political group. Decided on need alone.",
          body, video_ld, active="/")
 
 
@@ -494,9 +494,32 @@ def build_donate():
 def build_apply():
     def opts(items):
         return "".join(f'<option>{i}</option>' for i in items)
+
+    def field(fid, label, kind="text", req=True, span=False, **attrs):
+        extra = " ".join(f'{k.replace("_", "-")}="{v}"' for k, v in attrs.items())
+        star = ' <span class="req">*</span>' if req else ""
+        return (f'<div{" class=\"span2\"" if span else ""}>'
+                f'<label class="field" for="{fid}">{label}{star}</label>'
+                f'<input class="input" id="{fid}" name="{fid}" type="{kind}"'
+                f'{" required" if req else ""} {extra}></div>')
+
+    def select(fid, label, items, req=True, span=False):
+        star = ' <span class="req">*</span>' if req else ""
+        return (f'<div{" class=\"span2\"" if span else ""}>'
+                f'<label class="field" for="{fid}">{label}{star}</label>'
+                f'<select class="select" id="{fid}" name="{fid}"{" required" if req else ""}>'
+                f'<option value="">Choose one</option>{opts(items)}</select></div>')
+
+    def area(fid, label, ph, maxlen, req=True, wrapper=""):
+        star = ' <span class="req">*</span>' if req else ""
+        return (f'<div class="span2"{wrapper}>'
+                f'<label class="field" for="{fid}">{label}{star}</label>'
+                f'<textarea class="textarea" id="{fid}" name="{fid}"{" required" if req else ""} '
+                f'maxlength="{maxlen}" placeholder="{ph}"></textarea></div>')
+
     nexts = [("We read it", "It goes to the people who review it, and is treated with discretion."),
              ("We reach out", "Someone from the fund contacts you to understand what would genuinely help."),
-             ("We work out terms", "If we can help, we agree on repayment together. We will say so straight away if we cannot.")]
+             ("We agree terms", "If we can help, we agree repayment together. We will say so straight away if we cannot.")]
     nextlist = "".join(
         f'<li style="display:flex;gap:14px;padding:13px 0;{"" if i == 2 else "border-bottom:1px solid var(--line)"}">'
         f'<span class="pip pip--sm">{i+1}</span><span><strong style="display:block">{t}</strong>'
@@ -510,7 +533,7 @@ def build_apply():
 
     body = f"""<div class="wrap">
   <section class="hero reveal">
-    <p class="eyebrow">Apply for help</p>
+    <p class="eyebrow">Interest-free loan program</p>
     <h1>Tell us what<br>you need.</h1>
     <p class="lede">One form, reviewed by people from this community. You do not need to be a member anywhere, know anyone, or be owed a favor.</p>
   </section>
@@ -519,50 +542,64 @@ def build_apply():
     <div class="applygrid">
       <form class="formcard" id="apply-form" novalidate>
         <fieldset style="border:0;padding:0;margin:0">
-          <legend class="legend"><span class="pip">1</span><h3>About you</h3></legend>
+          <legend class="legend"><span class="pip">1</span><h3>Applicant information</h3></legend>
           <div class="fields">
-            <div class="span2"><label class="field" for="name">Full name <span class="req">*</span></label>
-              <input class="input" id="name" name="name" required maxlength="120" autocomplete="name" placeholder="First and last name"></div>
-            <div><label class="field" for="email">Email address <span class="req">*</span></label>
-              <input class="input" id="email" name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></div>
-            <div><label class="field" for="phone">Phone number <span class="req">*</span></label>
-              <input class="input" id="phone" name="phone" type="tel" required maxlength="40" autocomplete="tel" placeholder="(410) 000-0000"></div>
-            <div class="span2"><label class="field" for="bestTime">Best time to reach you</label>
-              <select class="select" id="bestTime" name="bestTime"><option value="">Choose one</option>{opts(["Morning", "Afternoon", "Evening", "Any time"])}</select></div>
+            {field("name", "Full name", span=True, autocomplete="name", maxlength="120", placeholder="First and last name")}
+            {field("dob", "Date of birth", kind="date", autocomplete="bday")}
+            {field("phone", "Phone number", kind="tel", autocomplete="tel", maxlength="40", placeholder="(410) 000-0000")}
+            {field("email", "Email address", kind="email", span=True, autocomplete="email", maxlength="254", placeholder="you@example.com")}
+            {area("address", "Home address", "Street, city, state and ZIP", 300)}
+            {select("marital", "Marital status", ["Single", "Married", "Divorced", "Widowed"])}
+            {field("dependents", "Number of dependents", kind="number", min="0", max="20", inputmode="numeric", placeholder="0")}
           </div>
         </fieldset>
 
         <fieldset style="border:0;padding:0;margin:0">
-          <legend class="legend"><span class="pip">2</span><h3>What you need</h3></legend>
+          <legend class="legend"><span class="pip">2</span><h3>Loan request</h3></legend>
           <div class="fields">
-            <div><label class="field" for="helpType">Type of help <span class="req">*</span></label>
-              <select class="select" id="helpType" name="helpType" required><option value="">Choose one</option>{opts(["Rent or mortgage", "Bar or Bat Mitzvah", "A wedding", "Finding a job", "Credit card debt", "Something else"])}</select></div>
-            <div><label class="field" for="amount">Amount requested <span class="req">*</span></label>
-              <input class="input" id="amount" name="amount" required maxlength="20" inputmode="decimal" placeholder="$ 0.00"></div>
-            <div><label class="field" for="timeline">When is this needed by? <span class="req">*</span></label>
-              <select class="select" id="timeline" name="timeline" required><option value="">Choose one</option>{opts(["Immediately", "Within two weeks", "Within a month", "Flexible"])}</select></div>
-            <div><label class="field" for="before">Received help from SBF before? <span class="req">*</span></label>
-              <select class="select" id="before" name="before" required><option value="">Choose one</option>{opts(["Yes", "No"])}</select></div>
+            {field("amount", "Loan amount requested", inputmode="decimal", maxlength="20", placeholder="$ 0.00")}
+            {field("neededBy", "Date funds are needed by", kind="date")}
+            {area("purpose", "Purpose of the loan", "What the money is for, and anything about the situation you want us to know. There is no wrong way to write this.", 1500)}
           </div>
         </fieldset>
 
         <fieldset style="border:0;padding:0;margin:0">
-          <legend class="legend"><span class="pip">3</span><h3>Your situation</h3></legend>
+          <legend class="legend"><span class="pip">3</span><h3>Repayment</h3></legend>
           <div class="fields">
-            <div class="span2"><label class="field" for="situation">Tell us what is going on <span class="req">*</span></label>
-              <textarea class="textarea" id="situation" name="situation" required maxlength="2000"
-                placeholder="As much or as little as you want to share. There is no wrong way to write this."></textarea></div>
-            <div class="span2"><label class="field" for="heard">How did you hear about SBF?</label>
-              <select class="select" id="heard" name="heard"><option value="">Choose one</option>{opts(["A friend or family member", "Someone at shul", "A search engine", "Social media", "Somewhere else"])}</select></div>
+            {field("monthlyRepay", "How much can you afford to repay monthly?", inputmode="decimal", maxlength="20", placeholder="$ 0.00")}
+            {select("guarantors", "Can you provide guarantors?", ["Yes, I can provide two guarantors", "Yes, I can provide one guarantor", "No, I cannot provide any guarantors"])}
+          </div>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0">
+          <legend class="legend"><span class="pip">4</span><h3>General eligibility</h3></legend>
+          <div class="fields">
+            {select("overdue", "Do you have overdue bills or missed payments?", ["Yes", "No"])}
+            {select("bankruptcy", "Have you ever filed for bankruptcy?", ["Yes", "No"])}
+            {area("overdueDetail", "If yes, please explain", "A sentence or two is fine.", 1000, req=False, wrapper=' id="overdue-detail" hidden')}
+          </div>
+        </fieldset>
+
+        <fieldset style="border:0;padding:0;margin:0">
+          <legend class="legend"><span class="pip">5</span><h3>Final questions</h3></legend>
+          <div class="fields">
+            {select("openToContact", "Are you open to us contacting you to discuss your application?", ["Yes", "No"], span=True)}
           </div>
         </fieldset>
 
         <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
 
-        <label class="check" for="consent">
-          <input id="consent" name="consent" type="checkbox" required>
-          <span class="muted">The information above is accurate to the best of my knowledge, and SBF may contact me about this request. <span class="req">*</span></span>
+        <label class="check" for="declaration">
+          <input id="declaration" name="declaration" type="checkbox" required>
+          <span class="muted">I declare that the information provided is true and complete. <span class="req">*</span></span>
         </label>
+
+        <div style="margin-top:18px">
+          <label class="field" for="signature">Signature <span class="req">*</span></label>
+          <input class="input" id="signature" name="signature" required maxlength="120"
+                 autocomplete="off" placeholder="Type your full name">
+          <p class="small" style="margin-top:8px">Typing your name here counts as your signature. Today's date is recorded automatically.</p>
+        </div>
 
         <div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-theme="dark" style="margin-top:18px"></div>
         <div style="display:flex;flex-direction:column;gap:14px;margin-top:24px">
@@ -581,8 +618,8 @@ def build_apply():
     </div>
   </section>
 </div>"""
-    page("/apply/", f"Apply for Help — {ORG}",
-         "One confidential form. No membership required, no affiliation needed. Tell us what you need and we will get back to you.",
+    page("/apply/", f"Apply for an Interest-Free Loan — {ORG}",
+         "One confidential form. No membership required, no affiliation needed. Interest-free loans for families in Baltimore.",
          body, active="/apply/")
 
 
