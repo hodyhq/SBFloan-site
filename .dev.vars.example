@@ -1,0 +1,12 @@
+# Local development only. Copy to .dev.vars (gitignored) and fill in.
+# Production values live in Cloudflare Pages > Settings > Environment variables.
+
+# Restricted key, scoped to Checkout Sessions + Prices write only.
+STRIPE_SECRET_KEY=rk_test_...
+
+RESEND_API_KEY=re_...
+APPLY_FROM=Sepharadic Baltimore Fund <applications@email.sbfloan.com>
+APPLY_TO=sbfloan@hody.run
+
+# Optional. When unset the endpoints skip Turnstile so local dev works.
+TURNSTILE_SECRET_KEY=
