@@ -431,6 +431,18 @@ def build_about():
 
   <section class="section">
     <div class="center" style="margin-bottom:24px">
+      <p class="pillbadge">Who runs the fund</p>
+      <h2>The people reviewing your<br>application live here too.</h2>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;padding:44px 26px;
+                border:2px dashed var(--line-2);border-radius:28px">
+      <p class="muted" style="max-width:620px;text-align:center">[BOARD &amp; TRUSTEES &mdash; to supply.
+      Names and roles, or a single paragraph if the fund prefers to stay unnamed.]</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="center" style="margin-bottom:24px">
       <p class="eyebrow">Common questions</p>
       <h2>Before you apply.</h2>
     </div>

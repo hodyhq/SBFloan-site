@@ -5,8 +5,8 @@
 :root {
   /* One tone everywhere. Sits between the near-black that read too dark and
      the white that read too light: L=0.030 against 0.003 and 1.000. */
-  --bg:        #22314A;      /* the single ground */
-  --bg-2:      #2B3C58;      /* cards and panels, one step up */
+  --bg:        #1E2E4D;      /* the single ground */
+  --bg-2:      #26395E;      /* cards and panels, one step up */
   --bg-3:      #33456380;    /* subtle fills */
   --txt:       #F0F5FC;
   --txt-2:     #BACAE1;
@@ -14,10 +14,10 @@
   --acc:       #6FB2F2;
   --acc-deep:  #9BCBF8;
   --on-acc:    #0A1729;
-  --line:      #3A4C6B;
-  --line-2:    #485D80;
-  --fill:      #2B3C58;
-  --fill-acc:  #2E4568;
+  --line:      #35507E;
+  --line-2:    #456495;
+  --fill:      #26395E;
+  --fill-acc:  #2B4472;
 
   --display: Rubik, "Helvetica Neue", Arial, sans-serif;
   --body:    Assistant, "Helvetica Neue", Arial, sans-serif;
@@ -70,21 +70,34 @@ input, select, textarea, button { font: inherit; color: inherit; }
 }
 .skip:focus { left: 0; color: var(--on-acc); }
 
-/* ---- one ambient layer, page-wide. Never per-section: a wash inside an
-       overflow:hidden section gets sliced flat at the boundary. ---- */
+/* ---- one ambient layer, page-wide. Never per-section: a glow inside an
+       overflow:hidden section gets sliced flat at the boundary. Fixed, so it
+       stays put while the page scrolls past it. ---- */
 .ambient {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(760px 620px at 88% -140px, rgba(111,178,242,0.10), transparent 68%),
-    radial-gradient(620px 560px at -10% 34%, rgba(111,178,242,0.10), transparent 64%),
-    radial-gradient(700px 620px at 50% 104%, rgba(111,178,242,0.10), transparent 66%);
+    radial-gradient(760px 620px at 86% -60px,  rgba(111,178,242,0.30), transparent 66%),
+    radial-gradient(600px 540px at -8%  26%,  rgba(93,150,255,0.20),  transparent 62%),
+    radial-gradient(680px 600px at 104% 62%,  rgba(111,178,242,0.16), transparent 64%),
+    radial-gradient(820px 640px at 40%  104%, rgba(93,150,255,0.22),  transparent 66%);
+}
+.ambient::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 900px;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.030) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.030) 1px, transparent 1px);
+  background-size: 76px 76px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 62% at 50% 0%, #000 20%, transparent 74%);
+  mask-image: radial-gradient(ellipse 80% 62% at 50% 0%, #000 20%, transparent 74%);
 }
 @media (min-width: 900px) {
   .ambient {
     background:
-      radial-gradient(1100px 860px at 86% -180px, rgba(111,178,242,0.10), transparent 66%),
-      radial-gradient(900px 780px at -6% 32%, rgba(111,178,242,0.10), transparent 62%),
-      radial-gradient(1100px 820px at 50% 102%, rgba(111,178,242,0.10), transparent 64%);
+      radial-gradient(1180px 900px at 84% -140px, rgba(111,178,242,0.32), transparent 66%),
+      radial-gradient(900px 800px at -6%  28%,   rgba(93,150,255,0.20),  transparent 62%),
+      radial-gradient(1000px 860px at 106% 60%,  rgba(111,178,242,0.16), transparent 64%),
+      radial-gradient(1240px 900px at 42%  102%, rgba(93,150,255,0.22),  transparent 66%);
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -141,8 +154,10 @@ h3 { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px;
   padding: 0 30px; font-size: 1rem; font-weight: 600; border-radius: 11px; border: 1px solid transparent;
   cursor: pointer; text-align: center; }
-.btn--solid { background: var(--acc); color: var(--on-acc); box-shadow: 0 8px 22px rgba(10,20,36,0.30); }
-.btn--solid:hover { background: #9BCBF8; color: var(--on-acc); }
+.btn--solid { background: var(--acc); color: var(--on-acc);
+  box-shadow: 0 0 34px rgba(111,178,242,0.42), 0 8px 22px rgba(6,14,28,0.34); }
+.btn--solid:hover { background: #9BCBF8; color: var(--on-acc);
+  box-shadow: 0 0 44px rgba(155,203,248,0.55), 0 8px 22px rgba(6,14,28,0.34); }
 .btn--ghost { background: transparent; color: var(--txt); border-color: var(--line-2); }
 .btn--ghost:hover { color: var(--txt); border-color: var(--acc); }
 .btnrow { display: flex; flex-direction: column; gap: 12px; }
@@ -161,7 +176,8 @@ h3 { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-
   .hero .lede { margin-inline: auto; }
 }
 .card { display: flex; flex-direction: column; gap: 14px; padding: 24px;
-  background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--rad); }
+  background: linear-gradient(180deg, rgba(111,178,242,0.055), rgba(111,178,242,0) 42%), var(--bg-2);
+  border: 1px solid var(--line); border-radius: var(--rad); }
 @media (min-width: 900px) { .card { padding: 30px; } }
 .card svg { color: var(--acc); }
 .grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
@@ -169,7 +185,8 @@ h3 { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-
 @media (min-width: 1000px) { .grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .split { display: grid; gap: 26px; grid-template-columns: 1fr; align-items: center;
   padding: 30px 24px; border: 1px solid var(--line); border-radius: 28px;
-  background: var(--bg-2); box-shadow: 0 10px 30px rgba(4,10,20,0.22); }
+  background: linear-gradient(180deg, rgba(111,178,242,0.06), rgba(111,178,242,0) 38%), var(--bg-2);
+  box-shadow: 0 0 70px rgba(111,178,242,0.10), 0 14px 40px rgba(4,10,20,0.30); }
 @media (min-width: 900px) {
   .split { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; padding: 48px 52px; }
 }
@@ -179,7 +196,8 @@ h3 { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-
 
 /* video */
 .video { position: relative; display: block; border: 1px solid var(--line);
-  border-radius: 24px; overflow: hidden; box-shadow: 0 14px 40px rgba(4,10,20,0.28); }
+  border-radius: 24px; overflow: hidden;
+  box-shadow: 0 0 60px rgba(111,178,242,0.16), 0 18px 44px rgba(4,10,20,0.36); }
 .video img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; opacity: .88; }
 .video::after { content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(7,11,20,.12), rgba(7,11,20,.55)); }
@@ -275,8 +293,9 @@ a.credit:hover img { opacity: 1; }
 a.credit:hover strong { color: var(--acc); }
 
 /* ---- illustrations ---- */
-.shot { display: block; width: 100%; border-radius: 24px; border: 1px solid var(--line);
-  box-shadow: 0 14px 40px rgba(4,10,20,0.28); overflow: hidden; background: var(--bg-2); }
+.shot { display: block; width: 100%; border-radius: 24px; border: 1px solid var(--line-2);
+  box-shadow: 0 0 60px rgba(111,178,242,0.16), 0 18px 44px rgba(4,10,20,0.36);
+  overflow: hidden; background: var(--bg-2); }
 .shot img { width: 100%; height: auto; display: block; }
 .badge { position: absolute; left: -14px; bottom: -22px; display: flex; align-items: center; gap: 12px;
   padding: 12px 16px; background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 18px;
@@ -313,7 +332,7 @@ a.credit:hover strong { color: var(--acc); }
 }
 .logomark { display: flex; align-items: center; justify-content: center;
   width: 96px; height: 96px; background: #FFFFFF; border-radius: 26px;
-  box-shadow: 0 14px 40px rgba(3,10,22,0.42); }
+  box-shadow: 0 0 54px rgba(111,178,242,0.34), 0 14px 40px rgba(3,10,22,0.46); }
 .logomark img { width: 64px; height: 64px; }
 @media (min-width: 900px) {
   .logomark { width: 118px; height: 118px; border-radius: 30px; }
@@ -335,7 +354,7 @@ a.credit:hover strong { color: var(--acc); }
 }
 .logomark { display: flex; align-items: center; justify-content: center;
   width: 96px; height: 96px; background: #FFFFFF; border-radius: 26px;
-  box-shadow: 0 14px 40px rgba(3,10,22,0.42); }
+  box-shadow: 0 0 54px rgba(111,178,242,0.34), 0 14px 40px rgba(3,10,22,0.46); }
 .logomark img { width: 64px; height: 64px; }
 @media (min-width: 900px) {
   .logomark { width: 118px; height: 118px; border-radius: 30px; }
@@ -347,4 +366,5 @@ a.credit:hover strong { color: var(--acc); }
 
 /* ---- the big campaign numeral ---- */
 .bignum { font-family: var(--display); font-size: clamp(3.2rem, 9vw, 4.75rem); font-weight: 700;
-  line-height: 1; letter-spacing: -.04em; color: var(--acc); }
+  line-height: 1; letter-spacing: -.04em; color: var(--acc);
+  text-shadow: 0 0 48px rgba(111,178,242,0.55); }
