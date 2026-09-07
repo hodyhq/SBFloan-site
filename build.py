@@ -7,7 +7,7 @@ and is committed, so Cloudflare Pages needs no build step.
 
     python3 build.py
 """
-import pathlib, datetime
+import pathlib, datetime, hashlib, re
 
 SITE = "https://sbfloan.com"
 ORG = "Sepharadic Baltimore Fund"
@@ -18,6 +18,26 @@ ZELLE_USER, ZELLE_HOST = "sepharadicbaltimorefund", "gmail.com"
 PRESETS_ONCE = [18, 36, 72, 180, 360]
 PRESETS_RECUR = [1, 5, 10, 18, 26, 36, 52]
 OUT = pathlib.Path(__file__).parent / "public"
+
+
+def fingerprint(rel):
+    """Content-hash an asset and hard-link the hashed name beside it.
+
+    /assets/* is served immutable for a year, which is only safe if the URL
+    changes when the bytes do. Without this, an edit never reaches anyone who
+    has already visited.
+    """
+    src = OUT / rel
+    digest = hashlib.sha256(src.read_bytes()).hexdigest()[:10]
+    stem, _, ext = rel.rpartition(".")
+    hashed = f"{stem}.{digest}.{ext}"
+    for old in (OUT / stem).parent.glob(pathlib.Path(stem).name + ".*." + ext):
+        old.unlink()                      # drop the previous build's copy
+    (OUT / hashed).write_bytes(src.read_bytes())
+    return "/" + hashed
+
+
+ASSETS = {}
 TODAY = datetime.date.today().isoformat()
 
 NAV = [("/about/", "About"), ("/donate/", "Donate")]   # Apply lives in the CTA button
@@ -102,7 +122,7 @@ def head(title, desc, path, extra_ld=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Assistant:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="{ASSETS['css']}">
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
@@ -164,7 +184,7 @@ def footer():
   </div>
 </footer>
 </div>
-<script src="/assets/js/site.js" defer></script>
+<script src="{ASSETS['js']}" defer></script>
 </body>
 </html>
 """
@@ -647,6 +667,9 @@ tax-deductible to the extent allowed by law.
 
 if __name__ == "__main__":
     print("building sbfloan.com")
+    ASSETS["css"] = fingerprint("assets/css/site.css")
+    ASSETS["js"] = fingerprint("assets/js/site.js")
+    print(f"  {ASSETS['css']}\n  {ASSETS['js']}")
     build_home(); build_about(); build_donate(); build_apply(); build_thanks()
     build_meta()
     print("done")
