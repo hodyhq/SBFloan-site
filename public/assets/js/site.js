@@ -2,6 +2,31 @@
 (() => {
   'use strict';
 
+  /* ---- scroll reveals ----
+     The `js` class is added here rather than in the HTML, so a visitor without
+     JavaScript never gets content that is hidden and never un-hidden. */
+  const reveal = () => {
+    const items = document.querySelectorAll('[data-r]');
+    if (!items.length) return;
+    if (!('IntersectionObserver' in window) ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.documentElement.classList.add('js');
+    items.forEach((el, i) => {
+      el.classList.add('r-' + (el.dataset.r || 'up'));
+      el.style.transitionDelay = Math.min(i % 3, 2) * 90 + 'ms';
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('on');
+        io.unobserve(e.target);        // reveal once, then stop watching
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    items.forEach((el) => io.observe(el));
+  };
+  reveal();
+
   /* ---- mobile nav ---- */
   const burger = document.querySelector('.burger');
   const mnav = document.getElementById('mnav');
