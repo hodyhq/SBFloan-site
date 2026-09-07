@@ -68,6 +68,15 @@ CATS = [
 ]
 
 
+def shot(name, alt, w, h, eager=False):
+    """WebP with a JPEG fallback, intrinsic size set so nothing reflows."""
+    return (f'<picture class="shot">'
+            f'<source srcset="/assets/img/{name}.webp" type="image/webp">'
+            f'<img src="/assets/img/{name}.jpg" width="{w}" height="{h}" alt="{alt}"'
+            f'{" fetchpriority=\"high\"" if eager else " loading=\"lazy\""}>'
+            f'</picture>')
+
+
 def icon(name, size=24):
     return (f'<svg width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
             f'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[name]}</svg>')
@@ -119,7 +128,7 @@ def head(title, desc, path, extra_ld=""):
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{SITE}/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#070B14">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="/assets/img/logo.png" type="image/png">
 <link rel="apple-touch-icon" href="/assets/img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -218,13 +227,22 @@ def build_home():
         f'<article class="card"><span style="color:var(--acc)">{icon(name)}</span>'
         f'<h3>{t}</h3><p class="muted">{c}</p></article>' for t, c, name in CATS)
     body = f"""<div class="wrap">
-  <section class="hero reveal">
-    <p class="eyebrow">Baltimore &middot; Independent community fund</p>
-    <h1>Help for our<br>community.</h1>
-    <p class="lede">Emergency support for families in Baltimore &mdash; decided on the need of the person asking, and nothing else.</p>
-    <div class="btnrow">
-      <a class="btn btn--solid" href="/apply/">Apply for help</a>
-      <a class="btn btn--ghost" href="/donate/">Donate</a>
+  <section class="herosplit reveal">
+    <div class="herotext">
+      <p class="pillbadge">Interest-free loans &middot; Baltimore</p>
+      <h1>Help for our<br>community.</h1>
+      <p class="lede">Interest-free loans and support for families in Baltimore &mdash; decided on the need of the person asking, and nothing else.</p>
+      <div class="btnrow">
+        <a class="btn btn--solid" href="/apply/">Apply for help</a>
+        <a class="btn btn--ghost" href="/donate/">Donate</a>
+      </div>
+    </div>
+    <div style="position:relative">
+      {shot("hero", "A loan being handed across a kitchen table, with the written agreement beside it", 1400, 1050, eager=True)}
+      <div class="badge">
+        <img src="/assets/img/logo.png" width="42" height="42" alt="">
+        <span>Interest-free<br>since day one</span>
+      </div>
     </div>
   </section>
 
@@ -245,12 +263,7 @@ def build_home():
         <p class="muted">We cannot help with everything, and we will say so straight away if we cannot.</p>
       </div>
       <div>
-        <a class="video" href="https://www.youtube.com/watch?v={VIDEO_ID}" target="_blank" rel="noopener">
-          <img src="https://i.ytimg.com/vi/{VIDEO_ID}/maxresdefault.jpg" width="1280" height="720" loading="lazy"
-               alt="Watch: about the {ORG}">
-          <span class="play" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="#05101F"><path d="M8 5.2v13.6L19 12z"/></svg></span>
-        </a>
-        <p class="small" style="margin-top:12px">Watch &mdash; about the fund, in the words of the people who built it.</p>
+        {shot("terms", "Two people agreeing the terms of a loan over a signed document", 1400, 933)}
       </div>
     </div>
   </section>
@@ -266,6 +279,23 @@ def build_home():
         <span style="font-family:var(--display);font-size:clamp(3.2rem,9vw,4.75rem);font-weight:600;line-height:1;letter-spacing:-.04em;color:var(--acc);text-shadow:0 0 46px rgba(77,166,240,.45)">$5</span>
         <span class="small">every week &middot; cancel any time</span>
         <a class="btn btn--solid" href="/donate/?amount=5&amp;frequency=weekly">Join the campaign</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="split">
+      <div>
+        <a class="video" href="https://www.youtube.com/watch?v={VIDEO_ID}" target="_blank" rel="noopener">
+          <img src="https://i.ytimg.com/vi/{VIDEO_ID}/maxresdefault.jpg" width="1280" height="720" loading="lazy"
+               alt="Watch: about the {ORG}">
+          <span class="play" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M8 5.2v13.6L19 12z"/></svg></span>
+        </a>
+      </div>
+      <div class="stack">
+        <p class="pillbadge">In their own words</p>
+        <h2>Hear it from the people<br>who built the fund.</h2>
+        <p class="muted">A short introduction to what SBF does and why it exists.</p>
       </div>
     </div>
   </section>
@@ -342,8 +372,11 @@ def build_about():
 
   <section class="section">
     <div class="split">
+      <div>
+        {shot("about", "Members of the fund reviewing applications together around a table", 1400, 933)}
+      </div>
       <div class="stack">
-        <p class="eyebrow">Why we exist</p>
+        <p class="pillbadge">Why we exist</p>
         <h2>Nobody should have to explain their hardest month to someone who has a stake in the answer.</h2>
       </div>
       <div class="stack">
@@ -371,7 +404,7 @@ def build_about():
       <div>
         <a class="video" href="https://www.youtube.com/watch?v={VIDEO_ID}" target="_blank" rel="noopener">
           <img src="https://i.ytimg.com/vi/{VIDEO_ID}/maxresdefault.jpg" width="1280" height="720" loading="lazy" alt="Watch: about the {ORG}">
-          <span class="play" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="#05101F"><path d="M8 5.2v13.6L19 12z"/></svg></span>
+          <span class="play" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M8 5.2v13.6L19 12z"/></svg></span>
         </a>
       </div>
     </div>
@@ -453,6 +486,19 @@ def build_donate():
       </div>
       <p class="status" id="donate-status" role="status" aria-live="polite" hidden></p>
     </form>
+  </section>
+
+  <section class="section">
+    <div class="split">
+      <div class="stack">
+        <p class="pillbadge">Repaid, then lent again</p>
+        <h2>Every dollar goes<br>back out.</h2>
+        <p class="muted">Loans are repaid into the same fund and lent to the next family. A donation here does not get spent once &mdash; it keeps working.</p>
+      </div>
+      <div>
+        {shot("repayment", "A monthly repayment being placed into an envelope beside a calendar", 1254, 1254)}
+      </div>
+    </div>
   </section>
 
   <section class="section">
