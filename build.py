@@ -151,8 +151,7 @@ def header(active):
     mlinks = "".join(
         f'<a href="{href}"{" aria-current=\"page\"" if href == active else ""}>{label}</a>'
         for href, label in NAV)
-    return f"""<div class="wrap">
-  <header class="hdr">
+    return f"""  <header class="hdr">
     <a class="brand" href="/">
       <img src="/assets/img/logo.png" width="40" height="40" alt="{ORG} logo">
       <span>Sepharadic<br>Baltimore Fund</span>
@@ -165,8 +164,6 @@ def header(active):
     </button>
   </header>
   <nav class="mnav" id="mnav" aria-label="Main">{mlinks}<a href="/apply/">Apply for help</a></nav>
-</div>
-<main id="main">
 """
 
 
@@ -213,8 +210,18 @@ def footer():
 """
 
 
+HERO_RE = re.compile(r'(<div class="wrap">\s*)(<section[\s\S]*?</section>)', re.M)
+
+
 def page(path, title, desc, body, extra_ld="", active=""):
-    html = head(title, desc, path, extra_ld) + header(active) + body + footer()
+    """The header and the page's first section share one navy band, so the top
+    of every page has weight and the logo has a dark field to sit on."""
+    m = HERO_RE.search(body)
+    hero = m.group(2)
+    rest = body[:m.start()] + '<div class="wrap">' + body[m.end():]
+    band = ('<div class="heroband">\n<div class="wrap">\n' + header(active)
+            + '\n' + hero + '\n</div>\n</div>\n<main id="main">\n')
+    html = head(title, desc, path, extra_ld) + band + rest + footer()
     out = OUT / path.strip("/") / "index.html" if path != "/" else OUT / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html)
@@ -240,7 +247,7 @@ def build_home():
     <div style="position:relative">
       {shot("hero", "A loan being handed across a kitchen table, with the written agreement beside it", 1400, 1050, eager=True)}
       <div class="badge">
-        <img src="/assets/img/logo.png" width="42" height="42" alt="">
+        <div class="logomark"><img src="/assets/img/logo.png" width="80" height="80" alt=""></div>
         <span>Interest-free<br>since day one</span>
       </div>
     </div>
@@ -361,7 +368,8 @@ def build_about():
 
     body = f"""<div class="wrap">
   <section class="hero reveal">
-    <p class="eyebrow">About the fund</p>
+    <div class="logomark" style="margin-bottom:6px"><img src="/assets/img/logo.png" width="80" height="80" alt=""></div>
+    <p class="pillbadge">About the fund</p>
     <h1>A fund with no<br>other agenda.</h1>
     <p class="lede">Built by members of this community. No affiliation, no membership, and no interest in anything other than helping.</p>
     <div class="btnrow">
@@ -456,7 +464,8 @@ def build_donate():
     amounts = amt_set(PRESETS_ONCE, "once", False) + amt_set(PRESETS_RECUR, "recur", True)
     body = f"""<div class="wrap">
   <section class="hero reveal">
-    <p class="eyebrow">Make a donation</p>
+    <div class="logomark" style="margin-bottom:6px"><img src="/assets/img/logo.png" width="80" height="80" alt=""></div>
+    <p class="pillbadge">Make a donation</p>
     <h1>Give what you want,<br>as often as you want.</h1>
     <p class="lede">You choose the amount and you choose how often. Every donation goes back out to a family in our own community.</p>
   </section>
@@ -556,11 +565,11 @@ def build_apply():
                 f'<select class="select" id="{fid}" name="{fid}"{" required" if req else ""}>'
                 f'<option value="">Choose one</option>{opts(items)}</select></div>')
 
-    def area(fid, label, ph, maxlen, req=True, wrapper=""):
+    def area(fid, label, ph, maxlen, req=True, wrapper="", cls=""):
         star = ' <span class="req">*</span>' if req else ""
         return (f'<div class="span2"{wrapper}>'
                 f'<label class="field" for="{fid}">{label}{star}</label>'
-                f'<textarea class="textarea" id="{fid}" name="{fid}"{" required" if req else ""} '
+                f'<textarea class="textarea{cls}" id="{fid}" name="{fid}"{" required" if req else ""} '
                 f'maxlength="{maxlen}" placeholder="{ph}"></textarea></div>')
 
     nexts = [("We read it", "It goes to the people who review it, and is treated with discretion."),
@@ -579,7 +588,8 @@ def build_apply():
 
     body = f"""<div class="wrap">
   <section class="hero reveal">
-    <p class="eyebrow">Interest-free loan program</p>
+    <div class="logomark" style="margin-bottom:6px"><img src="/assets/img/logo.png" width="80" height="80" alt=""></div>
+    <p class="pillbadge">Interest-free loan program</p>
     <h1>Tell us what<br>you need.</h1>
     <p class="lede">One form, reviewed by people from this community. You do not need to be a member anywhere, know anyone, or be owed a favor.</p>
   </section>
@@ -594,7 +604,7 @@ def build_apply():
             {field("dob", "Date of birth", kind="date", autocomplete="bday")}
             {field("phone", "Phone number", kind="tel", autocomplete="tel", maxlength="40", placeholder="(410) 000-0000")}
             {field("email", "Email address", kind="email", span=True, autocomplete="email", maxlength="254", placeholder="you@example.com")}
-            {area("address", "Home address", "Street, city, state and ZIP", 300)}
+            {area("address", "Home address", "Street, city, state and ZIP", 300, cls=" textarea--short")}
             {select("marital", "Marital status", ["Single", "Married", "Divorced", "Widowed"])}
             {field("dependents", "Number of dependents", kind="number", min="0", max="20", inputmode="numeric", placeholder="0")}
           </div>

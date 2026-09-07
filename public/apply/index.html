@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Assistant:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/assets/css/site.2c8373571d.css">
+<link rel="stylesheet" href="/assets/css/site.956e3e18ca.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
@@ -54,6 +54,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <div class="page">
 <div class="ambient" aria-hidden="true"></div>
+<div class="heroband">
 <div class="wrap">
   <header class="hdr">
     <a class="brand" href="/">
@@ -68,14 +69,17 @@
     </button>
   </header>
   <nav class="mnav" id="mnav" aria-label="Main"><a href="/about/">About</a><a href="/donate/">Donate</a><a href="/apply/">Apply for help</a></nav>
-</div>
-<main id="main">
-<div class="wrap">
-  <section class="hero reveal">
-    <p class="eyebrow">Interest-free loan program</p>
+
+<section class="hero reveal">
+    <div class="logomark" style="margin-bottom:6px"><img src="/assets/img/logo.png" width="80" height="80" alt=""></div>
+    <p class="pillbadge">Interest-free loan program</p>
     <h1>Tell us what<br>you need.</h1>
     <p class="lede">One form, reviewed by people from this community. You do not need to be a member anywhere, know anyone, or be owed a favor.</p>
   </section>
+</div>
+</div>
+<main id="main">
+<div class="wrap">
 
   <section class="section">
     <div class="applygrid">
@@ -87,7 +91,7 @@
             <div><label class="field" for="dob">Date of birth <span class="req">*</span></label><input class="input" id="dob" name="dob" type="date" required autocomplete="bday"></div>
             <div><label class="field" for="phone">Phone number <span class="req">*</span></label><input class="input" id="phone" name="phone" type="tel" required autocomplete="tel" maxlength="40" placeholder="(410) 000-0000"></div>
             <div class="span2"><label class="field" for="email">Email address <span class="req">*</span></label><input class="input" id="email" name="email" type="email" required autocomplete="email" maxlength="254" placeholder="you@example.com"></div>
-            <div class="span2"><label class="field" for="address">Home address <span class="req">*</span></label><textarea class="textarea" id="address" name="address" required maxlength="300" placeholder="Street, city, state and ZIP"></textarea></div>
+            <div class="span2"><label class="field" for="address">Home address <span class="req">*</span></label><textarea class="textarea textarea--short" id="address" name="address" required maxlength="300" placeholder="Street, city, state and ZIP"></textarea></div>
             <div><label class="field" for="marital">Marital status <span class="req">*</span></label><select class="select" id="marital" name="marital" required><option value="">Choose one</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></div>
             <div><label class="field" for="dependents">Number of dependents <span class="req">*</span></label><input class="input" id="dependents" name="dependents" type="number" required min="0" max="20" inputmode="numeric" placeholder="0"></div>
           </div>
