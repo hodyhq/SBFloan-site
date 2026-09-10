@@ -327,7 +327,7 @@ def build_home():
       "embedUrl": "https://www.youtube.com/embed/{VIDEO_ID}",
       "publisher": {{ "@id": "{SITE}/#org" }}
     }}"""
-    page("/", f"{ORG} — Emergency Help for Our Community",
+    page("/", f"{ORG} — Interest-Free Loans in Baltimore",
          "Interest-free loans and support for families in Baltimore. Independent of any shul or political group. Decided on need alone.",
          body, video_ld, active="/")
 
