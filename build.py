@@ -434,18 +434,6 @@ def build_about():
 
   <section class="section">
     <div class="center" data-r="up" style="margin-bottom:24px">
-      <p class="pillbadge">Who runs the fund</p>
-      <h2>The people reviewing your<br>application live here too.</h2>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:center;padding:44px 26px;
-                border:2px dashed var(--line-2);border-radius:28px">
-      <p class="muted" style="max-width:620px;text-align:center">[BOARD &amp; TRUSTEES &mdash; to supply.
-      Names and roles, or a single paragraph if the fund prefers to stay unnamed.]</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="center" data-r="up" style="margin-bottom:24px">
       <p class="eyebrow">Common questions</p>
       <h2>Before you apply.</h2>
     </div>
@@ -544,15 +532,13 @@ def build_donate():
   </section>
 
   <section class="section">
-    <div class="split" data-r="up">
-      <div class="stack" data-r="left">
-        <p class="eyebrow">Already giving?</p>
-        <h2>Manage it yourself,<br>any time.</h2>
+    <div class="split split--cta" data-r="up">
+      <div class="stack">
+        <p class="pillbadge">Already giving?</p>
+        <h2>Manage it yourself, any time.</h2>
         <p class="muted">Update your card, change your amount, or stop a recurring gift from the donor portal.</p>
       </div>
-      <div>
-        <a class="btn btn--solid" href="https://checkout.sbfloan.com/p/login/00gcQA4d89WUfjq7ss" target="_blank" rel="noopener">Open donor portal</a>
-      </div>
+      <a class="btn btn--solid" href="https://checkout.sbfloan.com/p/login/00gcQA4d89WUfjq7ss" target="_blank" rel="noopener">Open donor portal</a>
     </div>
   </section>
 </div>"""
@@ -778,6 +764,14 @@ tax-deductible to the extent allowed by law.
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; frame-src https://challenges.cloudflare.com; connect-src 'self'; form-action 'self' https://checkout.stripe.com; base-uri 'none'; object-src 'none'; frame-ancestors 'none'
+
+# Staging and preview hosts must never outrank the real site. Canonical already
+# points every page at sbfloan.com, but canonical is a hint — this is a directive.
+https://beta.sbfloan.com/*
+  X-Robots-Tag: noindex, nofollow
+
+https://sbfloan-site.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
 
 /api/*
   Cache-Control: no-store

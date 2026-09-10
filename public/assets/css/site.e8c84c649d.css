@@ -388,3 +388,12 @@ a.credit:hover strong { color: var(--acc); }
     opacity: 1; transform: none;
   }
 }
+
+/* ---- a panel whose second column is just an action ----
+   An equal 1fr/1fr grid gave the button half the panel and centred it in dead
+   space, so it read as detached from the copy it belongs to. */
+.split--cta { align-items: center; }
+@media (min-width: 900px) {
+  .split--cta { grid-template-columns: minmax(0, 1fr) auto; gap: 40px; }
+  .split--cta .btn { white-space: nowrap; }
+}
